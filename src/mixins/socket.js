@@ -154,10 +154,10 @@ module.exports = {
           break;
         case '1002': // 查询擂台
           message = {
-            request_type: '1002',
-            longitude: this.location.longitude,
-            latitude: this.location.latitude,
-            requestid: this.genRequestId('1002'),
+            request_type: "1002",
+            longitude: options.longitude,
+            latitude: options.latitude,
+            requestid: this.genRequestId("1002"),
             platform: 0,
             appid: this.appid,
             openid: this.openid,

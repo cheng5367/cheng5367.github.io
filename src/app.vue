@@ -7,6 +7,7 @@
       <el-button size="mini" @click="getYaolingInfo">妖灵</el-button>
       <el-button size="mini" @click="filterDialogVisible = true">自定义筛选</el-button>
       <el-button size="mini" @click="getToken">添加token</el-button>
+      <el-button size="mini" @click="getLeiTal">擂台搜索</el-button>
       <div v-if="mode === 'wide'">
         <div style="font-size: 14px;">
           <div>当前线程数: {{sockets.length}}/{{thread}}</div>
@@ -61,6 +62,54 @@
     <el-button type="primary" @click="tokenTrue">确 定</el-button>
   </span>
 </el-dialog>
+
+<!--擂台控件布局-->
+<div class="ui-canvas" v-if="isLeiTai"></div>
+<div class="ui-leitai" v-if="isLeiTai">
+  <div class="ui-leitai-cont">
+    <i class="el-icon-error" @click="closeCanvas"></i>
+    <div class="ui-header">
+      <label>经度:</label>
+      <input value="" class="ui-lt-input" v-model="ltLat"/>
+      <label>纬度:</label>
+      <input value="" class="ui-lt-input" v-model="ltLong"/>
+      <span class="ui-lt-btn" @click="serLeiTai">查询</span>
+    </div>
+    <ul class="leitaiInfo-lisit">
+      <li>
+        <div class="lt-Name">擂主名称</div>
+        <div class="lt-lat">经度</div>
+        <div class="lt-long">纬度</div>
+        <div class="lt-zl">胜利者战力</div>
+        <div class="lt-yl">胜利者妖灵</div>
+        <div class="lt-opt">操作</div>
+      </li>
+      <li v-for="(item,index) in leiTaiInfo" :key="index" v-if="item.state == 0">
+        <div class="lt-Name">{{item.winner_name}}</div>
+        <div class="lt-lat">{{item.latitude}}</div>
+        <div class="lt-long">{{item.longtitude}}</div>
+        <div class="lt-zl">{{item.winner_fightpower}}</div>
+        <div class="lt-yl">
+          <el-popover
+            placement="right"
+            width="300"
+            trigger="click">
+            <el-table :data="item.sprite_list">
+              <el-table-column width="150" property="spriteid" label="名称" :formatter="formatter"></el-table-column>
+              <el-table-column width="100" property="fightpower" label="战力"></el-table-column>
+              <el-table-column width="50" property="level" label="等级"></el-table-column>
+            </el-table>
+            <el-button slot="reference">查询擂台妖灵信息</el-button>
+          </el-popover>
+        </div>
+        <div class="lt-opt">
+          <el-button slot="reference" disabled>复制</el-button>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+<!--擂台控件布局-->
   </div>
 </template>
 <script>
@@ -114,7 +163,6 @@ export default {
       show_box:false,
       version:APP_VERSION,
     };
-
 
     let flag = false;
     let ans = [];
@@ -206,6 +254,11 @@ export default {
       openidVal: '',
       gwgoTokenVal: '',
       getSearchYaoLing: [],
+      isLeiTai: false, // 擂台组件控制开关
+      leiTaiInfo: [],
+      // 擂台经纬度
+      ltLong: '',
+      ltLat: '',
     };
   },
   mounted() {
@@ -239,7 +292,7 @@ export default {
           e => {
             console.log(e);
             if (e.code === 3) {
-              this.notify('无法获取设备位置信息');
+              // this.notify('无法获取设备位置信息');
             }
           }
         )
@@ -270,7 +323,6 @@ export default {
     },
     getSerchYl: function(yl){
       this.getSearchYaoLing.push(yl);
-      console.log(this.getSearchYaoLing);
     },
 
     getSerYlName: function(ylId){
@@ -328,14 +380,20 @@ export default {
     getToken: function(){
       this.tokenEle = true;
     },
-
+    /**
+     * 根据妖灵ID获取妖灵名称
+    */
+    getYaolingName: function(ylId) {
+      for(var i =0;i< this.yaolings.length;i++) {
+        if (ylId == this.yaolings[i].Id) {
+          return this.yaolings[i].Name;
+        }
+      }
+    },
     tokenTrue: function(){
       this.tokenEle = false;
       this.$cookies.set("openid", this.openidVal)
       this.$cookies.set("gwgo_token", this.gwgoTokenVal)
-
-      console.log(this.openidVal);
-      console.log(this.gwgoTokenVal);
     },
     /**
      * 获取妖灵数据
@@ -384,11 +442,9 @@ export default {
     /**
      * 获取擂台数据
      */
-    getLeitaiInfo: function() {
-      this.notify('功能开发中!');
-      return;
-      if (this.botMode) return;
-      this.sendMessage(this.initSocketMessage('1001'));
+    getLeitaiInfo: function(data) {
+      this.leiTaiInfo = data;
+      console.log(this.yaolings);
     },
     /**
      * 获取官方配置文件
@@ -409,6 +465,40 @@ export default {
     up:function(val) {
       return this.upYaolings.hasOwnProperty(val) && this.upYaolings[val] ;
     },
+
+    /**
+     * 擂台信息
+    */
+    getLeiTal: function(){
+      this.isLeiTai = true;
+      this.sendMessage(this.initSocketMessage('1002',{
+        longitude: 116.3919281960,
+        latitude: 39.8704202963
+      }));
+    },
+    serLeiTai: function() {
+      var T = this;
+      // ltLong ltLat绝对不能为空
+      if(this.ltLong != "" && this.ltLat != "") {
+        this.leiTaiInfo = [];
+        T.sendMessage(this.initSocketMessage('1002',{
+          longitude: Number(T.ltLong),
+          latitude: Number(T.ltLat)
+        }));
+      }
+    },
+    formatter(row,column){
+      for(var i = 0;i<this.yaolings.length;i++) {
+        if(this.yaolings[i].Id == row.spriteid) {
+          return this.yaolings[i].Name;
+        }
+      }
+    },
+    closeCanvas: function() {
+      this.isLeiTai = false;
+      this.leiTaiInfo = [];
+    },
+
   },
   computed: {
     fit: function() {
@@ -530,6 +620,117 @@ export default {
 }
 ul,li{
   list-style-type:none
+}
+.ui-canvas{
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  z-index: 100;
+  opacity: .5;
+}
+.ui-leitai{
+  position: fixed;
+  top: 0;
+  left: 50%;
+  width: 1000px;
+  height: 700px;
+  margin-left: -500px;
+  background-color: #fff;
+  z-index: 101;
+  border-radius: 10px;
+  padding: 20px;
+  &-cont{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    .el-icon-error{
+      position: absolute;
+      right: 20px;
+      top: 0;
+      font-size: 25px;
+      cursor: pointer;
+    }
+    .leitaiInfo-lisit{
+      height: 600px;
+      overflow: hidden;
+      overflow-y: scroll;
+      li{
+        margin-bottom: 15px;
+        overflow: hidden;
+        div{
+          float: left;
+        }
+        .lt-Name{
+          width: 200px;
+        }
+        .lt-lat{
+          width: 150px;
+        }
+        .lt-long{
+          width: 150px;
+        }
+        .lt-zl{
+          width: 150px;
+        }
+        .lt-yl{
+          width: 200px;
+        }
+        .lt-opt{
+          width: 100px;
+        }
+      }
+    }
+  }
+}
+
+.ui-header{
+  margin-bottom: 20px;
+}
+.ui-lt-input{
+  width: 150px;
+  -webkit-appearance: none;
+  background-color: #fff;
+  background-image: none;
+  border-radius: 4px;
+  border: 1px solid #dcdfe6;
+  box-sizing: border-box;
+  color: #606266;
+  display: inline-block;
+  font-size: inherit;
+  height: 30px;
+  line-height: 30px;
+  outline: none;
+  padding: 0 15px;
+  transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+}
+.ui-lt-btn{
+  display: inline-block;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    background: #fff;
+    border: 1px solid #dcdfe6;
+    color: #606266;
+    text-align: center;
+    box-sizing: border-box;
+    margin: 0;
+    transition: .1s;
+    font-weight: 500;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    padding: 12px 20px;
+    font-size: 14px;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #409eff;
+    border-color: #409eff;
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 4px;
 }
 </style>
 

@@ -12,6 +12,7 @@ window.md5 = require('md5');
 window.$ = window.jQuery = require('jquery');
 import App from './App';
 import {
+  Popover,
   Table,
   TableColumn,
   Button,
@@ -26,8 +27,12 @@ import {
   Input,
   Collapse,
   Checkbox,
+  Container,
+  Header,
+  Tag,
+  Main,
   CollapseItem
-} from 'element-ui';
+} from "element-ui";
 import './index.less';
 import 'element-ui/lib/theme-chalk/button.css';
 import 'element-ui/lib/theme-chalk/switch.css';
@@ -44,7 +49,6 @@ import 'element-ui/lib/theme-chalk/col.css';
 import 'element-ui/lib/theme-chalk/checkbox.css';
 import VueCookies from "vue-cookies";
 
-
 Vue.prototype.$ELEMENT = { size: 'medium' };
 Vue.prototype.$notify = Notification;
 Vue.use(Table);
@@ -60,7 +64,12 @@ Vue.use(Dialog);
 Vue.use(Row);
 Vue.use(Col);
 Vue.use(Checkbox);
+Vue.use(Container);
+Vue.use(Header);
+Vue.use(Main);
+Vue.use(Tag);
 Vue.use(VueCookies);
+Vue.use(Popover);
 
 let getParameter = (name, loca = window.location.href) => {
   const regexS = `[\\?&]${name}=([^&#]*)`;

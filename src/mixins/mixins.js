@@ -31,6 +31,7 @@ module.exports = {
         return item.Id === id;
       });
     },
+
     /**
      * 获取下一个定位
      */
@@ -84,7 +85,7 @@ module.exports = {
      * 处理消息
      */
     handleMessage(data, socket) {
-      
+
       var msgType = this.messageMap.get(`msg_${data.requestid}`);
       if (msgType) {
         this.messageMap.delete(`msg_${data.requestid}`);
@@ -107,7 +108,7 @@ module.exports = {
             // 机器人模式
             this.botAnalyze(data.sprite_list);
             return;
-          } 
+          }
 
           if (this.mode === 'wide' || this.mode === 'temp') {
             this.buildMarkersByData(data.sprite_list);
@@ -145,6 +146,7 @@ module.exports = {
           break;
         case '1002':
         //this.getLeitaiNearby(data);
+        this.getLeitaiInfo(data.dojo_list);
       }
     },
     /**
