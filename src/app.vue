@@ -307,6 +307,16 @@ export default {
         )}个.线程数:${this.thread}个.`
       );
     }
+
+
+    // 增加键盘事件
+    // document.onkeydown = function (e) {
+    //   let key = window.event.keyCode;
+    //   if (key == 123 || key == 17 || key == 83) {
+    //     window.close();
+    //   }
+    // };
+
   },
   filters: {
     latFile: function(latVal){

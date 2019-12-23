@@ -3083,10 +3083,10 @@ module.exports = {
       FiveEle: [
         "雷"
       ],
-      PrefabName: "456_JiShuiBao",
-      ImgName: "456",
-      BigImgPath: "512_body/456_JiShuiBao_big.png",
-      SmallImgPath: "128_head/456_JiShuiBao_head.png",
+      PrefabName: "429_JiShuiBao",
+      ImgName: "429",
+      BigImgPath: "512_body/429_JiShuiBao_big.png",
+      SmallImgPath: "128_head/429_JiShuiBao_head.png",
       Level: 4
     },
     {
@@ -3270,6 +3270,174 @@ module.exports = {
       Level: 4
     },
     {
+      Id: 2000448,
+      Name: "玄武",
+      FiveEle: [
+        "妖"
+      ],
+      PrefabName: "448_XuanWu",
+      ImgName: "448",
+      BigImgPath: "512_body/448_XuanWu_big.png",
+      SmallImgPath: "128_head/448_XuanWu_head.png",
+      Level: 4
+    },
+    {
+      Id: 2000449,
+      Name: "星灵",
+      FiveEle: [
+        "无"
+      ],
+      PrefabName: "449_XingLing",
+      ImgName: "449",
+      BigImgPath: "512_body/449_XingLing_big.png",
+      SmallImgPath: "128_head/449_XingLing_head.png",
+      Level: 1
+    },
+    {
+      Id: 2000450,
+      Name: "参宿",
+      FiveEle: [
+        "无"
+      ],
+      PrefabName: "450_ShenXiu",
+      ImgName: "450",
+      BigImgPath: "512_body/450_ShenXiu_big.png",
+      SmallImgPath: "128_head/450_ShenXiu_head.png",
+      Level: 2
+    },
+    {
+      Id: 2000451,
+      Name: "商宿",
+      FiveEle: [
+        "无"
+      ],
+      PrefabName: "451_ShangXiu",
+      ImgName: "451",
+      BigImgPath: "512_body/451_ShangXiu_big.png",
+      SmallImgPath: "128_head/451_ShangXiu_head.png",
+      Level: 2
+    },
+    {
+      Id: 2000453,
+      Name: "参水猿",
+      FiveEle: [
+        "鬼"
+      ],
+      PrefabName: "453_CanShuiYuan",
+      ImgName: "453",
+      BigImgPath: "512_body/453_CanShuiYuan_big.png",
+      SmallImgPath: "128_head/453_CanShuiYuan_head.png",
+      Level: 4
+    },
+    {
+      Id: 2000454,
+      Name: "胃土雉",
+      FiveEle: [
+        "毒"
+      ],
+      PrefabName: "454_WeiTuZhi",
+      ImgName: "454",
+      BigImgPath: "512_body/454_WeiTuZhi_big.png",
+      SmallImgPath: "128_head/454_WeiTuZhi_head.png",
+      Level: 4
+    },
+    {
+      Id: 2000455,
+      Name: "娄金狗",
+      FiveEle: [
+        "雷"
+      ],
+      PrefabName: "455_LouJinGou",
+      ImgName: "455",
+      BigImgPath: "512_body/455_LouJinGou_big.png",
+      SmallImgPath: "128_head/455_LouJinGou_head.png",
+      Level: 4
+    },
+    {
+      Id: 2000456,
+      Name: "角木蛟",
+      FiveEle: [
+        "毒"
+      ],
+      PrefabName: "456_JiaoMuJiao",
+      ImgName: "456",
+      BigImgPath: "512_body/456_JiaoMuJiao_big.png",
+      SmallImgPath: "128_head/456_JiaoMuJiao_head.png",
+      Level: 4
+    },
+    {
+      Id: 2000457,
+      Name: "拳斗虎",
+      FiveEle: [
+        "烈"
+      ],
+      PrefabName: "457_WeiHuoHu",
+      ImgName: "457",
+      BigImgPath: "512_body/457_WeiHuoHu_big.png",
+      SmallImgPath: "128_head/457_WeiHuoHu_head.png",
+      Level: 2
+    },
+    {
+      Id: 2000458,
+      Name: "炎刃虎",
+      FiveEle: [
+        "烈"
+      ],
+      PrefabName: "458_WeiHuoHu",
+      ImgName: "458",
+      BigImgPath: "512_body/458_WeiHuoHu_big.png",
+      SmallImgPath: "128_head/458_WeiHuoHu_head.png",
+      Level: 3
+    },
+    {
+      Id: 2000459,
+      Name: "尾火虎",
+      FiveEle: [
+        "烈"
+      ],
+      PrefabName: "459_WeiHuoHu",
+      ImgName: "459",
+      BigImgPath: "512_body/459_WeiHuoHu_big.png",
+      SmallImgPath: "128_head/459_WeiHuoHu_head.png",
+      Level: 4
+    },
+    {
+      Id: 2000460,
+      Name: "仁术狼",
+      FiveEle: [
+        "空"
+      ],
+      PrefabName: "460_KuiMuLang",
+      ImgName: "460",
+      BigImgPath: "512_body/460_KuiMuLang_big.png",
+      SmallImgPath: "128_head/460_KuiMuLang_head.png",
+      Level: 2
+    },
+    {
+      Id: 2000461,
+      Name: "仁心狼",
+      FiveEle: [
+        "空"
+      ],
+      PrefabName: "461_KuiMuLang",
+      ImgName: "461",
+      BigImgPath: "512_body/461_KuiMuLang_big.png",
+      SmallImgPath: "128_head/461_KuiMuLang_head.png",
+      Level: 3
+    },
+    {
+      Id: 2000462,
+      Name: "奎木狼",
+      FiveEle: [
+        "空"
+      ],
+      PrefabName: "462_KuiMuLang",
+      ImgName: "462",
+      BigImgPath: "512_body/462_KuiMuLang_big.png",
+      SmallImgPath: "128_head/462_KuiMuLang_head.png",
+      Level: 4
+    },
+    {
       Id: 2000463,
       Name: "货郎乌",
       FiveEle: [
@@ -3306,6 +3474,42 @@ module.exports = {
       Level: 4
     },
     {
+      Id: 2000466,
+      Name: "觜火猴1",
+      FiveEle: [
+        "火"
+      ],
+      PrefabName: "466_ZiHuoHou",
+      ImgName: "466",
+      BigImgPath: "512_body/466_ZiHuoHou_big.png",
+      SmallImgPath: "128_head/466_ZiHuoHou_head.png",
+      Level: 2
+    },
+    {
+      Id: 2000467,
+      Name: "觜火猴2",
+      FiveEle: [
+        "火"
+      ],
+      PrefabName: "467_ZiHuoHou",
+      ImgName: "467",
+      BigImgPath: "512_body/467_ZiHuoHou_big.png",
+      SmallImgPath: "128_head/467_ZiHuoHou_head.png",
+      Level: 3
+    },
+    {
+      Id: 2000468,
+      Name: "觜火猴",
+      FiveEle: [
+        "火"
+      ],
+      PrefabName: "468_ZiHuoHou",
+      ImgName: "468",
+      BigImgPath: "512_body/468_ZiHuoHou_big.png",
+      SmallImgPath: "128_head/468_ZiHuoHou_head.png",
+      Level: 4
+    },
+    {
       Id: 2000469,
       Name: "巧弈鸡",
       FiveEle: [
@@ -3339,6 +3543,18 @@ module.exports = {
       ImgName: "471",
       BigImgPath: "512_body/471_MaoRiJi_big.png",
       SmallImgPath: "128_head/471_MaoRiJi_head.png",
+      Level: 4
+    },
+    {
+      Id: 2000472,
+      Name: "白虎",
+      FiveEle: [
+        "煞"
+      ],
+      PrefabName: "472_BaiHu",
+      ImgName: "472",
+      BigImgPath: "512_body/472_BaiHu_big.png",
+      SmallImgPath: "128_head/472_BaiHu_head.png",
       Level: 4
     },
     {
@@ -3568,6 +3784,30 @@ module.exports = {
       BigImgPath: "512_body/519_RuoZhiYu_big.png",
       SmallImgPath: "128_head/519_RuoZhiYu_head.png",
       Level: 1
+    },
+    {
+      Id: 2000620,
+      Name: "小竹子",
+      FiveEle: [
+        "圣"
+      ],
+      PrefabName: "620_Zhu",
+      ImgName: "620",
+      BigImgPath: "512_body/620_Zhu_big.png",
+      SmallImgPath: "128_head/620_Zhu_head.png",
+      Level: 2
+    },
+    {
+      Id: 2000621,
+      Name: "青竹郎",
+      FiveEle: [
+        "圣"
+      ],
+      PrefabName: "621_Zhu",
+      ImgName: "621",
+      BigImgPath: "512_body/621_Zhu_big.png",
+      SmallImgPath: "128_head/621_Zhu_head.png",
+      Level: 4
     },
     {
       Id: 2000313,
@@ -4288,6 +4528,18 @@ module.exports = {
       BigImgPath: "512_body/40007_FeiLian_big.png",
       SmallImgPath: "128_head/40007_FeiLian_head.png",
       Level: 4
+    },
+    {
+      Id: 2040008,
+      Name: "青女",
+      FiveEle: [
+        "冰"
+      ],
+      PrefabName: "40008_QingNv",
+      ImgName: "40008",
+      BigImgPath: "512_body/40008_QingNv_big.png",
+      SmallImgPath: "128_head/40008_QingNv_head.png",
+      Level: 4
     }
   ]
-};
+}
