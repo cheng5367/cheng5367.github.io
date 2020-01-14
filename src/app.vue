@@ -264,7 +264,7 @@ export default {
       gwgoTokenVal: '',
       getSearchYaoLing: [],
       isLeiTai: false, // 擂台组件控制开关
-      ylList: true, // 搜索妖灵结果列表
+      ylList: false, // 搜索妖灵结果列表
       leiTaiInfo: [],
       // 擂台经纬度
       ltLong: '',
