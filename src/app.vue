@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <right-nav :version="APP_VERSION" :settings="settings" :show-menu.sync="showMenu" :mode="mode"></right-nav>
+    <!-- <right-nav :version="APP_VERSION" :settings="settings" :show-menu.sync="showMenu" :mode="mode"></right-nav> -->
     <!-- <normal-nav :version="APP_VERSION" :settings="settings" :show-menu="showMenu"></normal-nav> -->
 
     <div id="buttons">
@@ -8,6 +8,7 @@
       <el-button size="mini" @click="filterDialogVisible = true">自定义筛选</el-button>
       <el-button size="mini" @click="getToken">添加token</el-button>
       <el-button size="mini" @click="getLeiTal">擂台搜索</el-button>
+      <el-button size="mini" @click="showYlList">查看妖灵列表</el-button>
       <div v-if="mode === 'wide'">
         <div style="font-size: 14px;">
           <div>当前线程数: {{sockets.length}}/{{thread}}</div>
@@ -19,7 +20,8 @@
       </div>
     </div>
     <!--页面主要布局-->
-    <div class="main">
+    <div id="qmap"></div>
+    <!-- <div class="main">
       <div class="left"><div id="qmap"></div></div>
       <div class="right">
         <ul>
@@ -29,39 +31,47 @@
           </li>
         </ul>
       </div>
-    </div>
+    </div> -->
     <!--页面主要布局-->
 
-    <radar-progress :show="progressShow" :max-range="max_range" :thread="thread" :percent="progressPercent"></radar-progress>
-    <el-dialog
-    title="自定义筛选"
-    :visible.sync="filterDialogVisible"
-    class="filter-dialog">
-    <div class="check">
-      <el-checkbox v-model="settings.use_custom">启用</el-checkbox>
+    <div class="yllist-wrap" v-if="ylList">
+      <ul class="ylist-ul">
+        <li>
+          <span class="yl-name">妖灵名称</span>
+          <span class="yl-site">坐标</span>
+          <span class="yl-time">时间</span>
+          <span class="yl-time">操作</span>
+        </li>
+        <li v-for="(item,index) in getSearchYaoLing" :key="index">
+          <span class="yl-name">{{getSerYlName(item.sprite_id)}}</span>
+          <span class="yl-site">{{item.latitude | latFile}},{{item.longtitude |longFile}}</span>
+        </li>
+      </ul>
     </div>
-    <el-row :gutter="10" class="filter-list">
-      <el-col v-for="(yl, index) in settings.custom_filter" :key="index" :xs="12" :sm="8" :md="6" :lg="4" :xl="3">
-        <div class="filter-content" :class="{active : yl.on}" @click="yl.on = !yl.on">
-          <img :src="'https://hy.gwgo.qq.com/sync/pet/'+yl.img" :alt="yl.name">
-          <span :class="{active:up(yl.id)}">{{ yl.name }}</span>
-        </div>
-      </el-col>
-    </el-row>
-  </el-dialog>
 
+    <radar-progress :show="progressShow" :max-range="max_range" :thread="thread" :percent="progressPercent"></radar-progress>
+    <el-dialog title="自定义筛选" :visible.sync="filterDialogVisible" class="filter-dialog">
+      <div class="check">
+        <el-checkbox v-model="settings.use_custom">启用</el-checkbox>
+      </div>
+      <el-row :gutter="10" class="filter-list">
+        <el-col v-for="(yl, index) in settings.custom_filter" :key="index" :xs="12" :sm="8" :md="6" :lg="4" :xl="3">
+          <div class="filter-content" :class="{active : yl.on}" @click="yl.on = !yl.on">
+            <img :src="'https://hy.gwgo.qq.com/sync/pet/'+yl.img" :alt="yl.name">
+            <span :class="{active:up(yl.id)}">{{ yl.name }}</span>
+          </div>
+        </el-col>
+      </el-row>
+    </el-dialog>
 
-  <el-dialog
-  title="输入token"
-  :visible.sync="tokenEle"
-  width="50%">
-  <el-input v-model="openidVal" placeholder="openid"></el-input>
-  <el-input v-model="gwgoTokenVal" placeholder="gwgo_token"></el-input>
-  <span slot="footer" class="dialog-footer">
-    <el-button @click="tokenEle = false">取 消</el-button>
-    <el-button type="primary" @click="tokenTrue">确 定</el-button>
-  </span>
-</el-dialog>
+    <el-dialog title="输入token" :visible.sync="tokenEle" width="50%">
+      <el-input v-model="openidVal" placeholder="openid"></el-input>
+      <el-input v-model="gwgoTokenVal" placeholder="gwgo_token"></el-input>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="tokenEle = false">取 消</el-button>
+        <el-button type="primary" @click="tokenTrue">确 定</el-button>
+      </span>
+    </el-dialog>
 
 <!--擂台控件布局-->
 <div class="ui-canvas" v-if="isLeiTai"></div>
@@ -195,7 +205,6 @@ export default {
       settings.custom_filter = ans;
     }
 
-
     if (!(location && settings.position_sync)) {
       location = {
         longitude: 116.3579177856,
@@ -255,6 +264,7 @@ export default {
       gwgoTokenVal: '',
       getSearchYaoLing: [],
       isLeiTai: false, // 擂台组件控制开关
+      ylList: true, // 搜索妖灵结果列表
       leiTaiInfo: [],
       // 擂台经纬度
       ltLong: '',
@@ -320,13 +330,16 @@ export default {
   },
   filters: {
     latFile: function(latVal){
-      return latVal.toString().slice(0,2)+ ','+latVal.toString().slice(2,latVal.length);
+      return latVal.toString().slice(0,2)+ '.'+latVal.toString().slice(2,latVal.length);
     },
     longFile: function(longVal){
-      return longVal.toString().slice(0,2)+ ','+longVal.toString().slice(2,longVal.length);
+      return longVal.toString().slice(0,3)+ '.'+longVal.toString().slice(2,longVal.length);
     },
   },
   methods: {
+    showYlList: function(){
+      this.ylList = !this.ylList;
+    },
     subLat: function(latVal) {
       var a = latVal.substring(0,2) + "," + latVal.substring(2,latVal.length);
       return a;
@@ -591,43 +604,7 @@ export default {
   position: relative;
   height: 100%;
 }
-.main{
-  width: 100%;
-  height: 100%;
-}
-.left{
-  width: 70%;
-  height: 100%;
-  float: left;
-}
-.right{
-  width: 30%;
-  height: 100%;
-  float: right;
-  ul{
-    height: 800px;
-    padding-top: 50px;
-    padding-left: 15px;
-    overflow-y:scroll;
-    li{
-      margin-bottom: 20px;
-      span{
-        display: inline-block;
-        margin-right: 10px;
-      }
-      .name{
-        width: 100px;
-        text-align: left;
-      }
-      .gps{
-        width: 175px;
-      }
-      .time{
-        width: 100px;
-      }
-    }
-  }
-}
+
 ul,li{
   list-style-type:none
 }
@@ -741,6 +718,28 @@ ul,li{
     padding: 10px 20px;
     font-size: 14px;
     border-radius: 4px;
+}
+
+.yllist-wrap{
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 450px;
+  height: 100%;
+  background-color: #fff;
+}
+.ylist-ul{
+  height: 900px;
+  overflow-y: scroll;
+}
+.ylist-ul span{
+  display: inline-block;
+}
+.yl-name{
+  width: 100px;
+}
+.yl-site{
+  width: 195px;
 }
 </style>
 
