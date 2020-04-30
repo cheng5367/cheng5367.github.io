@@ -9,7 +9,7 @@
     "build": "cross-env NODE_ENV='production' node ./build/build.js"
   },
   "dependencies": {
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "view-design": "^4.0.2",
     "vue-cookies": "^1.5.13"
   },
